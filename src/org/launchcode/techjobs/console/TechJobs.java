@@ -59,7 +59,7 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -91,9 +91,11 @@ public class TechJobs {
                 System.out.println("" + j + " - " + choices.get(choiceKeys[j]));
             }
 
-            choiceIdx = in.nextInt();
+            if(in.hasNextInt()) {
+                choiceIdx = in.nextInt();
+            } else
+                choiceIdx = -1;
             in.nextLine();
-
             // Validate user's input
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
@@ -109,6 +111,7 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
         if(someJobs.size()>0){
+            System.out.println(someJobs.size() + " results found");
             System.out.println("*****");
             for (HashMap<String, String>job : someJobs) {
                 for(Map.Entry<String,String> field : job.entrySet()){
@@ -117,7 +120,7 @@ public class TechJobs {
                 System.out.println("*****");
             }
         } else{
-            System.out.println("No results found.");
+            System.out.println("No results found");
         }
     }
 }
